@@ -55,7 +55,7 @@ contract HelperConfig is CodeConstants, Script {
         return getConfigsByChainId(block.chainid);
     }
 
-    function getSepoliaEthConfig() public view returns (NetworkConfig memory) {
+    function getSepoliaEthConfig() public pure returns (NetworkConfig memory) {
         return NetworkConfig({
             entranceFee: 0.01 ether,
             interval: 30,
@@ -78,7 +78,7 @@ contract HelperConfig is CodeConstants, Script {
         VRFCoordinatorV2_5Mock vrfCoordinatorMock =
             new VRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UNIT_LINK);
         LinkToken linkToken = new LinkToken();
-        uint256 subscriptionId = vrfCoordinatorMock.createSubscription();
+        vrfCoordinatorMock.createSubscription();
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({
