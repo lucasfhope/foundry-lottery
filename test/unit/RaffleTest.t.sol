@@ -32,7 +32,7 @@ contract RaffleTest is Test, CodeConstants {
         interval = config.interval;
         vrfCoordinator = config.vrfCoordinator;
         gasLane = config.gasLane;
-        subscriptionId = config.subscriptionId;     
+        subscriptionId = config.subscriptionId;
         callbackGasLimit = config.callbackGasLimit;
         link = config.link;
 
@@ -166,19 +166,19 @@ contract RaffleTest is Test, CodeConstants {
         }
         _;
     }
-    
+
     function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(uint256 randomRequestId)
-        public 
-        raffleEnteredAndTimePassed 
+        public
+        raffleEnteredAndTimePassed
         skipWhenOnForkedNetwork
     {
         vm.expectRevert(VRFCoordinatorV2_5Mock.InvalidRequest.selector);
         VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(randomRequestId, address(raffle));
     }
 
-    function testFulfillRandomWordsPicksAWinnerResetsAndSendsETH() 
-        public 
-        raffleEnteredAndTimePassed 
+    function testFulfillRandomWordsPicksAWinnerResetsAndSendsETH()
+        public
+        raffleEnteredAndTimePassed
         skipWhenOnForkedNetwork
     {
         uint256 additionalEntrants = 9;
@@ -201,9 +201,8 @@ contract RaffleTest is Test, CodeConstants {
         // should call our override of fulfillRandomWords which emits an event
         VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(uint256(requestId), address(raffle));
 
-
         assert(raffle.getRecentWinner() != address(0));
-        
+
         assert(raffle.getRaffleState() == Raffle.RaffleState.OPEN);
         assert(raffle.getNumPlayers() == 0);
         assert(previousTimestamp + interval < raffle.getLastTimestamp());

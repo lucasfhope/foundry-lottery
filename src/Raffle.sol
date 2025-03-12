@@ -34,20 +34,25 @@ import {console} from "forge-std/Console.sol";
  * @dev Implents Chainlink VRFv2.5
  */
 contract Raffle is VRFConsumerBaseV2Plus {
-    
-    /** Errors */
+    /**
+     * Errors
+     */
     error Raffle__NotEnoughEthToEnter();
     error Raffle__TranseferFailed();
     error Raffle__RaffleNotOpen();
     error Raffle__UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, RaffleState state);
 
-    /** Type Declarations */
+    /**
+     * Type Declarations
+     */
     enum RaffleState {
         OPEN,
         CALCULATING
     }
 
-    /** State Variables */
+    /**
+     * State Variables
+     */
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private constant NUM_WORDS = 1;
 
@@ -62,7 +67,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
     address private s_recentWinner;
     RaffleState private s_raffleState;
 
-    /** Events */
+    /**
+     * Events
+     */
     event EnteredRaffle(address indexed player);
     event WinnerPicked(address indexed winner);
     event RaffleRequestId(uint256 indexed requestId);
@@ -106,7 +113,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
      * 4. (Implicit) The contract has LINK
      */
     function checkUpkeep(bytes memory /* checkData */ )
-        public view
+        public
+        view
         returns (bool upkeepNeeded, bytes memory /* performData */ )
     {
         bool timeHasPassed = (block.timestamp - s_lastTimestamp) >= i_interval;
@@ -118,7 +126,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     function performUpkeep(bytes calldata /* performData */ ) external {
-        (bool upkeepNeeded, ) = checkUpkeep("");
+        (bool upkeepNeeded,) = checkUpkeep("");
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(address(this).balance, s_players.length, s_raffleState);
         }
@@ -130,9 +138,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
                 requestConfirmations: REQUEST_CONFIRMATIONS,
                 callbackGasLimit: i_callbackGasLimit,
                 numWords: NUM_WORDS,
-                extraArgs: VRFV2PlusClient._argsToBytes(
-                    VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
-                )
+                extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: false}))
             })
         );
         emit RaffleRequestId(requestId);
@@ -161,8 +167,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
         }
     }
 
-    /** Getter Functions */
-
+    /**
+     * Getter Functions
+     */
     function getEntranceFee() external view returns (uint256) {
         return i_entranceFee;
     }

@@ -17,23 +17,25 @@ contract CreateSubscription is Script {
         console.log("Update subscription ID in HelperConfig");
         return (subscriptionId, vrfCoordinator);
     }
-    
+
     function createSubscriptionUsingConfig() public returns (uint256, address) {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
-        (uint256 subscriptionId, ) = createSubscription(config.vrfCoordinator,config.account);
+        (uint256 subscriptionId,) = createSubscription(config.vrfCoordinator, config.account);
         return (subscriptionId, config.vrfCoordinator);
     }
 
     function run() external returns (uint256, address) {
-       return createSubscriptionUsingConfig();
+        return createSubscriptionUsingConfig();
     }
 }
 
 contract FundSubscription is CodeConstants, Script {
     uint96 public constant FUND_AMOUNT = 300 ether;
 
-    function fundSubscription(address vrfCoordinator, uint256 subscriptionId, address linkToken, address account) public {
+    function fundSubscription(address vrfCoordinator, uint256 subscriptionId, address linkToken, address account)
+        public
+    {
         console.log("Funding subscription: ", subscriptionId);
         console.log("Using vrfCoordinator: ", vrfCoordinator);
         console.log("On ChainID: ", block.chainid);
@@ -51,12 +53,7 @@ contract FundSubscription is CodeConstants, Script {
     function fundSubscriptionUsingConfig() public {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
-        fundSubscription(
-            config.vrfCoordinator,
-            config.subscriptionId, 
-            config.link,
-            config.account
-        );
+        fundSubscription(config.vrfCoordinator, config.subscriptionId, config.link, config.account);
     }
 
     function run() public {
@@ -78,12 +75,7 @@ contract AddConsumer is Script {
     function addConsumerUsingConfig(address raffle) public {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
-        addConsumer(
-            raffle, 
-            config.vrfCoordinator,
-            config.subscriptionId,
-            config.account
-        );
+        addConsumer(raffle, config.vrfCoordinator, config.subscriptionId, config.account);
     }
 
     function run() external {
