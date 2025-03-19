@@ -23,6 +23,8 @@ contract RaffleTest is Test, CodeConstants {
     address public PLAYER = makeAddr("player");
     uint256 public constant STARTING_USER_BALANCE = 10 ether;
 
+    event EnteredRaffle(address indexed player);
+
     function setUp() external {
         DeployRaffle deployer = new DeployRaffle();
         (raffle, helperConfig) = deployer.run();
@@ -85,7 +87,7 @@ contract RaffleTest is Test, CodeConstants {
     function testEmitsEventOnRaffleEntrance() public {
         vm.prank(PLAYER);
         vm.expectEmit(true, false, false, false, address(raffle));
-        emit Raffle.EnteredRaffle(PLAYER);
+        emit EnteredRaffle(PLAYER);
         raffle.enterRaffle{value: entranceFee}();
     }
 
