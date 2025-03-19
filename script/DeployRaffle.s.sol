@@ -5,13 +5,11 @@ import {Script} from "forge-std/Script.sol";
 import {Raffle} from "../src/Raffle.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
 import {CreateSubscription, FundSubscription, AddConsumer} from "./Interactions.s.sol";
-import {console} from "forge-std/Console.sol";
 
 contract DeployRaffle is Script {
     function run() external returns (Raffle, HelperConfig) {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
-        console.log(config.subscriptionId);
         if (config.subscriptionId == 0) {
             // Create and fund subscription
             CreateSubscription createSubscription = new CreateSubscription();
