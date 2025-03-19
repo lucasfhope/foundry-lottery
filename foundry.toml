@@ -14,5 +14,12 @@ fs_permissions = [
 ]
 
 
+
+[profile.release]
+optimizer = true
+optimizer_runs = 200
+
+
+
 [fuzz]
 runs = 256
