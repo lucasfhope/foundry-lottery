@@ -7,9 +7,9 @@ import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 abstract contract CodeConstants {
     /* Chainlink VRF Mock Values */
-    uint96 MOCK_BASE_FEE = 0.25 ether;     // 0.25 LINK
-    uint96 MOCK_GAS_PRICE_LINK = 1e9;      // 1 gwei LINK
-    int256 MOCK_WEI_PER_UNIT_LINK = 4e15;  // LINK/ETH price
+    uint96 MOCK_BASE_FEE = 0.25 ether; // 0.25 LINK
+    uint96 MOCK_GAS_PRICE_LINK = 1e9; // 1 gwei LINK
+    int256 MOCK_WEI_PER_UNIT_LINK = 4e15; // LINK/ETH price
 
     /* Chain IDs */
     uint256 public constant SEPOLIA_ETH_CHAIN_ID = 11155111;

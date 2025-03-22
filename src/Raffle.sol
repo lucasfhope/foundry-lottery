@@ -89,10 +89,10 @@ contract Raffle is VRFConsumerBaseV2Plus {
      * 3. The contract has ETH (players)
      * 4. (Implicit) The contract has LINK
      */
-    function checkUpkeep(bytes memory /*checkData*/)
+    function checkUpkeep(bytes memory /*checkData*/ )
         public
         view
-        returns (bool upkeepNeeded, bytes memory /*performData*/)
+        returns (bool upkeepNeeded, bytes memory /*performData*/ )
     {
         bool timeHasPassed = (block.timestamp - s_lastTimestamp) >= i_interval;
         bool isOpen = RaffleState.OPEN == s_raffleState;
@@ -102,12 +102,12 @@ contract Raffle is VRFConsumerBaseV2Plus {
         return (upkeepNeeded, "0x0");
     }
 
-    function performUpkeep(bytes calldata /*performData*/) external {
+    function performUpkeep(bytes calldata /*performData*/ ) external {
         (bool upkeepNeeded,) = checkUpkeep("");
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(address(this).balance, s_players.length, s_raffleState);
         }
-        
+
         s_raffleState = RaffleState.CALCULATING;
         uint256 requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
@@ -123,8 +123,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         emit RaffleRequestId(requestId);
     }
 
-
-    function fulfillRandomWords(uint256 /*requestId*/, uint256[] calldata randomWords) internal override {
+    function fulfillRandomWords(uint256, /*requestId*/ uint256[] calldata randomWords) internal override {
         uint256 winnerIndex = randomWords[0] % s_players.length;
         address payable winner = s_players[winnerIndex];
         s_recentWinner = winner;

@@ -39,7 +39,7 @@ contract LinkToken is ERC20 {
     }
 
     /* PRIVATE */
-    
+
     function contractFallback(address _to, uint256 _value, bytes memory _data) private {
         ERC677Receiver receiver = ERC677Receiver(_to);
         receiver.onTokenTransfer(msg.sender, _value, _data);
