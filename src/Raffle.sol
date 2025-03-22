@@ -7,7 +7,7 @@ import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/V
 /**
  * @title A Raffle contract
  * @author Lucas Hope
- * @notice A verifiably random raffle contract 
+ * @notice A verifiably random raffle contract
  * @dev Implents Chainlink VRFv2.5
  */
 contract Raffle is VRFConsumerBaseV2Plus {
