@@ -13,13 +13,5 @@ fs_permissions = [
   { access = "read", path = "./broadcast" }
 ]
 
-
-
-[profile.release]
-optimizer = true
-optimizer_runs = 200
-
-
-
 [fuzz]
 runs = 256

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // @dev This contract has been adapted to fit with foundry
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.18;
 
 import {ERC20} from "@solmate/tokens/ERC20.sol";
 
@@ -38,8 +38,8 @@ contract LinkToken is ERC20 {
         return true;
     }
 
-    // PRIVATE
-
+    /* PRIVATE */
+    
     function contractFallback(address _to, uint256 _value, bytes memory _data) private {
         ERC677Receiver receiver = ERC677Receiver(_to);
         receiver.onTokenTransfer(msg.sender, _value, _data);
