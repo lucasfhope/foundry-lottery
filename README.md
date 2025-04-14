@@ -29,7 +29,7 @@ This is a simple smart contract that allows users to contribute ETH, and lets th
 ## Quickstart
 
 ```bash
-git clone https://github.com/lucasfhope/solidity-fund-me.git
+git clone https://github.com/lucasfhope/solidity-lottery.git
 cd solidity-lottery
 make
 ```
